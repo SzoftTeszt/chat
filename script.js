@@ -42,8 +42,10 @@ logout.onclick= ()=>{
 onAuthStateChanged(auth, user =>{
   if (user)
   {
+    console.log(user)
     loggedUser.displayName=user.displayName
-    userinfo.innerHTML=user.displayName
+    loggedUser.token=user.accessToken
+    userinfo.innerHTML=user.displayName+"; "+loggedUser.token
   }
   else{
     userinfo.innerHTML="Senki sincs belépve :("
@@ -57,8 +59,9 @@ async function sendMessage(){
     date: Date.now(),
     message: newMessage.value
   }
-
-  const reposnse= await fetch(api,{
+  const ujCim=api+`?auth=${loggedUser.token}`
+  console.log(ujCim)
+  const reposnse= await fetch(ujCim,{
     method:"POST",
     body: JSON.stringify(body)
   })
@@ -97,7 +100,7 @@ async function getMessages(){
       console.log(m)
       const div = document.createElement("div")
       div.className="message"
-      if (m.user=="Attila") {
+      if (m.user==loggedUser.displayName) {
         div.classList.add("mymessage")
         m.user="Én"
       }
@@ -116,3 +119,5 @@ getMessages()
 setInterval(getMessages, 1000)
 
 send.addEventListener('click', sendMessage)
+
+// https://project-01-1125e-default-rtdb.europe-west1.firebasedatabase.app/messages.json?access_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQXR0aWxhIErDoWdlciIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NJRHdyd3poa3pzMUY1VWF5WFh1SlE3SDZiLWRGd3hQa05uYnVVZGNydEVoZHNZdlE9czk2LWMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcHJvamVjdC0wMS0xMTI1ZSIsImF1ZCI6InByb2plY3QtMDEtMTEyNWUiLCJhdXRoX3RpbWUiOjE3NDQyNzI3MTYsInVzZXJfaWQiOiIxQm13Uk5aR2RjT24zNE1WZ1FvZEJIWk5tUGgyIiwic3ViIjoiMUJtd1JOWkdkY09uMzRNVmdRb2RCSFpObVBoMiIsImlhdCI6MTc0NDI3MjcxNiwiZXhwIjoxNzQ0Mjc2MzE2LCJlbWFpbCI6ImphZ2VyYXR0aWxhQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTEzNDIyNDUzMzg3MDAzMTEyOTA0Il0sImVtYWlsIjpbImphZ2VyYXR0aWxhQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.VYtVrLQqe-RP_Sxs43ytFsE0guWwn0IN8rcLNMOIQCZa8c4tnLwPECi9zG75IGE_zlxN-0zQsI_zDVgkuf6g2rp8EiYBIm5hN2vRp9gDtZR4nlwZDsjsoCGnj1JdlhLAV2JeN8ZFzxYD-maA3DiXo0P_k4AEkVPlS4vNjKBhUIYubQAQ7T8VpgD3FPqs-gqPQbvfsuX53fxbRWlLCDnHBv6ExumxLl6tir-r_6cHntJVRyVWSQpsFtTmRl9yngPKSgfiyiG13ukoIJmSuwm__uJV4ywYAAuaKfGvuKHwE3dYA8_fjpNMpmgda_7NvsB74t0DwcYAm5n3L3xfwyp3qg 401 (Unauthorized)
