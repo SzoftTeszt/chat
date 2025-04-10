@@ -11,21 +11,21 @@
   <body>
     <div class="container">
       <h1 class="my-4">Chat World!</h1>
-      <div id="userinfo"></div>
+      <div id="userinfo" class="hidden"></div>
       <button id="googlelogin" type="button" class="my-3 btn btn-outline-primary">Login with Google</button>
-      <button id="logout" type="button" class="my-3 btn btn-outline-primary">Logout</button>
+      <button id="logout" type="button" class="hidden my-3 btn btn-outline-primary">Logout</button>
 
-
-      <div class="form-floating">
-        <textarea id="newmessage" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-        <label for="floatingTextarea2">Message</label>
+      <div id="wrapper" class="hidden">
+        <div class="form-floating">
+          <textarea id="newmessage" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+          <label for="floatingTextarea2">Message</label>
+        </div>
+        <button id="send" type="button" class="my-3 btn btn-outline-primary">Send</button>
+        <div id="content">  
+          <div class="rounded border border-primary" id="messages"></div>
+          <div id="alja"></div>
+        </div>
       </div>
-      <button id="send" type="button" class="my-3 btn btn-outline-primary">Send</button>
-      <div id="content">  
-        <div class="rounded border border-primary" id="messages"></div>
-        <div id="alja"></div>
-      </div>
-    
     </div>
 
 

@@ -4,7 +4,11 @@ import {
   signInWithPopup, 
   GoogleAuthProvider,
   signOut,
-  onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
+
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPKSvahzB95RJP5qZ5e3qyrEfkpevF-FA",
@@ -28,6 +32,7 @@ const messages = document.getElementById("messages")
 const googleLogin = document.getElementById("googlelogin")
 const logout = document.getElementById("logout")
 const userinfo = document.getElementById("userinfo")
+const wrapper = document.getElementById("wrapper")
 const loggedUser={}
 
 googleLogin.onclick = () =>
@@ -35,8 +40,33 @@ googleLogin.onclick = () =>
   signInWithPopup(auth, provider)
 }
 
+async function register(){
+  try{
+      const userCredemtial= await createUserWithEmailAndPassword(auth, email, password)
+  }
+  catch{
+    alert("Hiba a regisztációnál!")
+  }
+}
+
+async function login(){
+  try{
+      const userCredemtial= await signInWithEmailAndPassword(auth, email, password)
+  }
+  catch{
+    alert("Hiba a bejelentkezésnél!")
+  }
+}
+
 logout.onclick= ()=>{
   signOut(auth)
+}
+
+function csere(){
+  googleLogin.classList.toggle("hidden")
+  logout.classList.toggle("hidden")
+  userinfo.classList.toggle("hidden")
+  wrapper.classList.toggle("hidden")
 }
 
 onAuthStateChanged(auth, user =>{
@@ -46,11 +76,13 @@ onAuthStateChanged(auth, user =>{
     loggedUser.displayName=user.displayName
     loggedUser.token=user.accessToken
     userinfo.innerHTML=user.displayName+"; "+loggedUser.token
+    csere()
   }
   else{
     userinfo.innerHTML="Senki sincs belépve :("
     loggedUser.displayName=""
     loggedUser.token=""
+    csere()
   }
 
 })
