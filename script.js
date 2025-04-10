@@ -49,6 +49,8 @@ onAuthStateChanged(auth, user =>{
   }
   else{
     userinfo.innerHTML="Senki sincs belépve :("
+    loggedUser.displayName=""
+    loggedUser.token=""
   }
 
 })
